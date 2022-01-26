@@ -1,17 +1,16 @@
 import 'dart:ui';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:netflix_redesign/models/movie.dart';
 import 'package:netflix_redesign/screens/detail.dart';
+import 'package:netflix_redesign/utils/services.dart';
 import 'package:netflix_redesign/widgets/bottom_bar.dart';
-import 'package:netflix_redesign/widgets/category_list.dart';
-import 'package:netflix_redesign/widgets/home_header.dart';
-import 'package:netflix_redesign/widgets/search_bar.dart';
+import 'package:netflix_redesign/widgets/home/category_list.dart';
+import 'package:netflix_redesign/widgets/home/home_header.dart';
+import 'package:netflix_redesign/widgets/home/search_bar.dart';
 
 import '../constants.dart';
 
@@ -24,21 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final CarouselController _carouselController = CarouselController();
-  final String posterUrl = 'https://image.tmdb.org/t/p/original';
   int _current = 0;
-
-  late Future<Movie> futureDiscoverMovie;
-
-  Future<Movie> fetchDiscoverMovie() async {
-    final response = await http.get(Uri.parse(
-        'https://api.themoviedb.org/3/discover/movie?api_key=2d4d6c169da2c07b0371c7c1ac1c3648&sort_by=popularity.desc'));
-
-    if (response.statusCode == 200) {
-      return Movie.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load Movie');
-    }
-  }
 
   @override
   void initState() {
@@ -60,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: backgroundCover(),
           ),
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
+            filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
             child: SafeArea(
               child: RefreshIndicator(
                 color: kPrimaryColor,

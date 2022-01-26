@@ -64,10 +64,11 @@ class _BottomBarState extends State<BottomBar> {
             ),
             label: 'schedule',
           ),
+          // hide middle button XD
           BottomNavigationBarItem(
             icon: SvgPicture.asset('assets/icons/calendar.svg',
                 color: Colors.transparent),
-            label: 'hide',
+            label: 'transparent',
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
